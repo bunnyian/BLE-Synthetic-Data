@@ -1,0 +1,231 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		// Hush CMake
+		"cmake.configureOnOpen": false,
+		// IntelliSense
+		"C_Cpp.default.compilerPath": "${userHome}/zephyr-sdk-0.16.5-1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
+		"C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+		"C_Cpp.default.includePath": [
+			"${workspaceFolder}/**",
+			"${userHome}/zephyrproject/zephyr/**",
+		],
+		// File Associations
+		"files.associations": {
+			"uuid.h": "c",
+			"hrs.h": "c",
+			"conn.h": "c",
+			"bas.h": "c",
+			"kernel.h": "c",
+			"bluetooth.h": "c",
+			"hci.h": "c",
+			"types.h": "c",
+			"ble_service.h": "c",
+			"log.h": "c",
+			"data.h": "c",
+			"bitset": "c",
+			"string_view": "c",
+			"*.tcc": "c",
+			"cstdio": "c",
+			"stdbool.h": "c",
+			"string.h": "c",
+			"_locale.h": "c",
+			"stddef.h": "c",
+			"cdefs.h": "c",
+			"__bit_reference": "c",
+			"__node_handle": "c",
+			"atomic": "c",
+			"chrono": "c",
+			"cstddef": "c",
+			"deque": "c",
+			"__memory": "c",
+			"limits": "c",
+			"locale": "c",
+			"optional": "c",
+			"random": "c",
+			"ratio": "c",
+			"system_error": "c",
+			"tuple": "c",
+			"type_traits": "c",
+			"vector": "c",
+			"array": "c",
+			"functional": "c",
+			"utility": "c",
+			"variant": "c",
+			"__string": "c",
+			"cstdint": "cpp",
+			"stdint.h": "c",
+			"data_4hz.h": "c",
+			"gatt.h": "c",
+			"__locale": "c",
+			"cstdlib": "c",
+			"new": "c",
+			"ostream": "c",
+			"typeinfo": "c",
+			"algorithm": "c",
+			"complex": "c",
+			"bit": "c",
+			"cassert": "c",
+			"ccomplex": "c",
+			"cctype": "c",
+			"cerrno": "c",
+			"cfloat": "c",
+			"climits": "c",
+			"clocale": "c",
+			"cmath": "c",
+			"compare": "c",
+			"concepts": "c",
+			"condition_variable": "c",
+			"cstdarg": "c",
+			"cstring": "c",
+			"ctgmath": "c",
+			"ctime": "c",
+			"cwchar": "c",
+			"cwctype": "c",
+			"string": "c",
+			"unordered_map": "c",
+			"exception": "c",
+			"iterator": "c",
+			"memory": "c",
+			"memory_resource": "c",
+			"netfwd": "c",
+			"numeric": "c",
+			"initializer_list": "c",
+			"ios": "c",
+			"iosfwd": "c",
+			"istream": "c",
+			"mutex": "c",
+			"numbers": "c",
+			"queue": "c",
+			"semaphore": "c",
+			"sstream": "c",
+			"stdexcept": "c",
+			"stop_token": "c",
+			"streambuf": "c",
+			"thread": "c",
+			"cinttypes": "c",
+			"cstdbool": "c",
+			"version": "c",
+			"comm_protocol.h": "c",
+			"data_50hz.h": "c",
+			"synth_data.h": "c",
+			"data_100hz.h": "c",
+			"toolchain.h": "c"
+		},
+		"cortex-debug.variableUseNaturalFormat": false
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "West Build",
+				"type": "shell",
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				},
+				"command": "${userHome}/zephyrproject/.venv/bin/west",
+				"args": [
+					"build",
+					"-p",
+					"auto",
+					"-b",
+					"stm32wb5mm_dk",
+				],
+				"problemMatcher": [
+					"$gcc"
+				],
+			},
+			{
+				"label": "West Configurable Build",
+				"type": "shell",
+				"group": {
+					"kind": "build",
+				},
+				"command": "${userHome}/zephyrproject/.venv/bin/west",
+				"args": [
+					"build",
+					"-p",
+					"${input:pristine}",
+					"-b",
+					"${input:board}"
+				],
+				"problemMatcher": [
+					"$gcc"
+				]
+			},
+			{
+				"label": "West Flash",
+				"type": "shell",
+				"command": "${userHome}/zephyrproject/.venv/bin/west",
+				"args": [
+					"flash"
+				],
+				"problemMatcher": [
+					"$gcc"
+				]
+			}
+		],
+		"inputs": [
+			{
+				"id": "board",
+				"type": "promptString",
+				"default": "stm32wb5mm_dk",
+				"description": "See https://docs.zephyrproject.org/latest/boards/index.html"
+			},
+			{
+				"id": "pristine",
+				"type": "pickString",
+				"description": "Choose when to run a pristine build",
+				"default": "auto",
+				"options": [
+					"auto",
+					"always",
+					"never"
+				]
+			}
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Launch",
+				"device": "stm32wb5mm_dk",
+				"cwd": "${workspaceFolder}",
+				"executable": "build/zephyr/zephyr.elf",
+				"request": "launch",
+				"type": "cortex-debug",
+				"runToEntryPoint": "main",
+				"servertype": "stlink",
+				"gdbPath": "${userHome}/zephyr-sdk-0.16.5-1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+				"preLaunchTask": "West Build"
+			},
+			{
+				"name": "Attach",
+				"device": "stm32wb5mm_dk",
+				"cwd": "${workspaceFolder}",
+				"executable": "build/zephyr/zephyr.elf",
+				"request": "attach",
+				"type": "cortex-debug",
+				"runToEntryPoint": "main",
+				"servertype": "stlink",
+				"gdbPath": "${userHome}/zephyr-sdk-0.16.5-1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb"
+			},
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools-extension-pack",
+			"ms-python.python",
+			"ms-vscode.vscode-embedded-tools",
+			"ms-vscode.vscode-serial-monitor",
+			"marus25.cortex-debug",
+			"donjayamanne.python-environment-manager"
+		]
+	}
+}
